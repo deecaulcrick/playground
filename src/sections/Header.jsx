@@ -5,7 +5,7 @@ function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const menuVariants = {
@@ -44,9 +44,9 @@ function Header() {
   };
 
   return (
-    <div className="relative z-99">
-      <div className="fixed w-full h-full z-20">
-        <div className="flex justify-between items-center p-2 bg-white border-b border-b-black h-[60px] text-sm w-full">
+    <div className="bg-gray-100">
+      <div className=" w-full h-full">
+        <div className=" flex justify-between items-center px-6 md:px-12 py-2 bg-gray-100 border-b border-b-black h-[60px] text-sm w-full ">
           <div>DEE CAULCRICK</div>
           <div onClick={handleClick}>
             <button>{isOpen ? "CLOSE" : "MENU"}</button>
@@ -56,10 +56,10 @@ function Header() {
           {isOpen && (
             <motion.div
               key="menu"
-              className="w-screen h-screen bg-black/50  md:px-4 md:py-6 flex justify-end absolute"
+              className="w-screen h-screen bg-black/50 md:px-4 md:py-6 flex justify-end absolute top-[60px] z-9999"
             >
               <motion.div
-                className="bg-white rounded-sm w-screen h-fit px-6 py-8 md:w-[50vw] md:p-8 lg:w-[30vw]"
+                className="bg-gray-100 rounded-sm w-screen h-fit px-6 py-8 md:w-[50vw] md:p-8 lg:w-[30vw] relative "
                 variants={menuVariants}
                 initial="hidden"
                 animate="visible"
