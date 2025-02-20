@@ -47,7 +47,7 @@ function Projects() {
               }}
               transition={{ ease: easeInOut }}
               style={{ backgroundColor: project.color }}
-              className={`w-[80vw] min-h-[450px] md:w-[400px] md:h-[500px] rounded-3xl p-8 md:p-10 flex flex-col flex-none items-center justify-center card cursor-pointer`}
+              className={`w-[90vw] min-h-[450px] md:w-[400px] md:h-[500px] rounded-3xl p-8 md:p-10 flex flex-col flex-none items-center justify-center card cursor-pointer`}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               onMouseMove={handleMouseMove}

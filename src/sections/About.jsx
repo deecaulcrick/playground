@@ -1,7 +1,7 @@
 function About() {
   return (
     <section className="md:w-[80%] lg:w-[50%] p-6 md:p-12 mt-12">
-      <div className="text-2xl">
+      <div className="text-sm md:text-2xl">
         <p>
           Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
           commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus
