@@ -1,6 +1,6 @@
 "use client";
 import Accordion from "@/app/components/Accordion";
-import { LayoutGroup, AnimatePresence } from "motion/react";
+import { LayoutGroup, motion } from "motion/react";
 import { Noto_Sans_Tamil_Supplement } from "next/font/google";
 import { useState } from "react";
 
@@ -73,11 +73,23 @@ function Questions() {
           {/* <button className="group tracking-tight overflow-hidden font-medium text-sm px-6 py-3 rounded-3xl border border-gray/30 shadow-sm bg-transparent hover:text-white">
             Hiiiiiii
           </button> */}
-          <button className=" group tracking-tight overflow-hidden font-medium text-sm px-6 py-3 rounded-3xl border border-gray/30 shadow-sm bg-transparent hover:text-white hover:bg-black  transition-transform duration-300 ease-in-out ">
-            <span className="  z-10">Book an intro call</span>
+          <button className=" tracking-tight overflow-hidden font-medium text-sm px-6 py-3 rounded-3xl border border-gray shadow-xs">
+            <motion.span
+              className="bg-[linear-gradient(to_right,#DD7DDF,#E1CD86,#BBCB92,#71C2EF,#3BFFFF,#DD7DDF,#E1CD86,#BBCB92,#71C2EF,#3BFFFF)] [background-size:200%] text-transparent bg-clip-text"
+              animate={{
+                backgroundPositionX: "100%",
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            >
+              Book an intro call
+            </motion.span>
           </button>
         </div>
-        <div className="grid md:grid-cols-2 gap-4 mt-6">
+        <div className="grid md:grid-cols-2 gap-4 mt-6 md:mt-12">
           <LayoutGroup>
             <div>
               {column1.map(({ question, answer, id }, index) => (

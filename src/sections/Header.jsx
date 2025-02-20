@@ -1,116 +1,65 @@
 "use client";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import { useState } from "react";
+import FlipLink from "@/app/components/FlipLink";
+import { easeInOut } from "motion";
 function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClick = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  const menuVariants = {
-    hidden: { scaleY: 0 }, // Offscreen
-    visible: {
-      scaleY: 1,
-      originY: "top", // Fully on-screen
+  const variant = {
+    animate: (custom) => ({
+      y: ["0px", "16px"],
       transition: {
+        duration: 1,
+        repeat: Infinity,
+        repeatType: "mirror",
         ease: "easeInOut",
-        when: "beforeChildren", // Ensures inner items animate after the menu
+        delay: custom * 0.3,
       },
-    },
-    exit: {
-      scaleY: 0, // Offscreen again
-      transition: {
-        ease: "easeInOut",
-        duration: 0.5,
-        // when: "afterChildren", // Ensures inner items exit first
-      },
-    },
+    }),
   };
+  const { scrollY } = useScroll();
+  const [hasBorder, setHasBorder] = useState(false);
 
-  const itemVariants = {
-    hidden: { opacity: 0, scaleY: 0 }, // Start below with 0 opacity
-    visible: (custom) => ({
-      opacity: 1,
-      scaleY: 1,
-      originY: "top",
-      transition: { duration: 0.3, delay: custom * 0.3 },
-    }), // Fade in and slide up
-    exit: {
-      opacity: 0,
-      scaleY: 0,
-      transition: { duration: 0.1 },
-    }, // Fade out and slide down
-  };
-
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setHasBorder(latest > 10); // Add border when scrolled at least 10px
+  });
   return (
-    <div className="bg-gray-100">
-      <div className=" w-full h-full">
-        <div className=" flex justify-between items-center px-6 md:px-12 py-2 bg-gray-100 border-b border-b-black h-[60px] text-sm w-full ">
-          <div>DEE CAULCRICK</div>
-          <div onClick={handleClick}>
-            <button>{isOpen ? "CLOSE" : "MENU"}</button>
-          </div>
-        </div>
-        <AnimatePresence>
-          {isOpen && (
+    <motion.div
+      className="fixed  w-full top-0 z-99 bg-white"
+      style={{ zIndex: 99 }}
+      animate={{
+        borderBottom: hasBorder ? "1px solid #000" : "1px solid transparent",
+        transition: { ease: easeInOut },
+      }}
+    >
+      <div className=" flex justify-between items-center px-6 md:px-12 py-2 bg-white h-[60px] text-md w-full ">
+        <div className="flex gap-2">
+          <div className="relative  h-4 w-2 ">
             <motion.div
-              key="menu"
-              className="w-screen h-screen bg-black/50 md:px-4 md:py-6 flex justify-end absolute top-[60px] z-9999"
-            >
-              <motion.div
-                className="bg-gray-100 rounded-sm w-screen h-fit px-6 py-8 md:w-[50vw] md:p-8 lg:w-[30vw] relative "
-                variants={menuVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                <motion.div
-                  className="flex flex-col gap-2 text-4xl"
-                  custom={0}
-                  variants={itemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <p>Home</p>
-                  <p>About</p>
-                  <p>Speaking</p>
-                  <p>Projects</p>
-                  <p>Contact</p>
-                </motion.div>
-
-                <motion.div
-                  className="flex flex-col gap-3 mt-12"
-                  custom={1}
-                  variants={itemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <p>Youtube</p>
-                  <p>LinkedIn</p>
-                  <p>Twitter</p>
-                </motion.div>
-                <motion.div
-                  className="mt-7"
-                  custom={2}
-                  variants={itemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <h3 className="text-2xl">Get in touch</h3>
-                  <a href="#" className="underline">
-                    hello@deecaulcrick.com
-                  </a>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              className="bg-[#cdd629] size-2 rounded-[50%] absolute z-30"
+              custom={0}
+              variants={variant}
+              animate="animate"
+            ></motion.div>
+            <motion.div
+              className="bg-[#cdd629]/70 size-2 rounded-[50%] absolute z-20"
+              custom={1}
+              variants={variant}
+              animate="animate"
+            ></motion.div>
+            <motion.div
+              className="bg-[#cdd629]/50 size-2 rounded-[50%] absolute z-10"
+              custom={2}
+              variants={variant}
+              animate="animate"
+            ></motion.div>
+          </div>
+          <div>deecaulcrick.com</div>
+        </div>
+        <div>
+          <FlipLink href="mailto:deecaulcrick@gmail.com">Email me :)</FlipLink>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
